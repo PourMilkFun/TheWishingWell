@@ -893,9 +893,8 @@
 }
 
 .site-intro {
-  /* No grid/place-items — all children are absolutely positioned so nothing can sit mid-frame */
   position: fixed; inset: 0; z-index: 200;
-  background: #CDE5FF;
+  background: #0c101a;
   overflow: hidden; opacity: 1;
   transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -906,61 +905,19 @@
 }
 .site-intro__veil {
   position: absolute; inset: 0;
-  /* Keep center burn-in clear; darken only the bottom third for copy contrast */
-  background:
-    linear-gradient(180deg,
-      transparent 0%,
-      transparent 58%,
-      rgba(18, 22, 32, 0.35) 72%,
-      rgba(18, 22, 32, 0.72) 100%);
   pointer-events: none;
-}
-.site-intro__copy {
-  /* Bottom third — clears mid-video gold "Wishing Well" burn-in */
-  position: absolute; z-index: 2;
-  top: auto; bottom: 0; left: 0; right: 0;
-  display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
-  text-align: center;
-  /* Safe padding from bottom edges; keep content within ~bottom 32vh */
-  padding: 2.5rem 1.5rem max(1.5rem, env(safe-area-inset-bottom, 0px) + 1.35rem);
-  max-height: 34vh;
-  box-sizing: border-box;
-  background: linear-gradient(180deg,
-    transparent 0%,
-    rgba(12, 16, 26, 0.55) 28%,
-    rgba(12, 16, 26, 0.82) 100%);
-  pointer-events: none;
-  animation: intro-rise 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-.site-intro__eyebrow {
-  margin: 0 0 0.4rem;
-  font-size: 0.72rem; font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase;
-  color: #F5D78A;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
-}
-.site-intro__title {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 6.5vw, 3.6rem);
-  font-weight: 700; letter-spacing: -0.045em; line-height: 0.95;
-  color: #FFFEFC;
-  text-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.65),
-    0 0 28px rgba(212, 160, 23, 0.35),
-    0 8px 24px rgba(0, 0, 0, 0.4);
-}
-.site-intro__sub {
-  margin: 0.65rem 0 0;
-  font-size: clamp(0.85rem, 2vw, 1.05rem);
-  font-weight: 700; color: rgba(255, 254, 252, 0.88);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
+  background: transparent;
 }
 .site-intro__loading {
-  margin: 0.95rem 0 0;
-  display: inline-flex; align-items: center; gap: 0.45rem;
+  position: absolute; z-index: 2;
+  left: 0; right: 0; bottom: max(1.25rem, env(safe-area-inset-bottom, 0px) + 1rem);
+  margin: 0;
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.45rem;
+  width: 100%;
   font-size: 0.72rem; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase;
-  color: rgba(255, 254, 252, 0.78);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  color: rgba(255, 254, 252, 0.9);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.75);
+  pointer-events: none;
 }
 .site-intro__loading-dot {
   width: 0.45rem; height: 0.45rem; border-radius: 999px;
@@ -972,8 +929,7 @@
   50% { transform: scale(1.15); opacity: 1; box-shadow: 0 0 0 6px rgba(245, 215, 138, 0); }
 }
 .site-intro__skip {
-  /* Top-right so it never collides with bottom-third copy */
-  position: absolute; z-index: 3; right: 1.25rem; top: 1.25rem; bottom: auto;
+  position: absolute; z-index: 3; right: 1.25rem; top: 1.25rem;
   border-radius: 999px; border: 2px solid rgba(212, 160, 23, 0.45);
   background: rgba(255, 254, 252, 0.92);
   padding: 0.65rem 1.15rem;
@@ -988,7 +944,7 @@
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .site-intro, .site-intro__copy { animation: none !important; transition: opacity 0.2s ease !important; }
+  .site-intro { animation: none !important; transition: opacity 0.2s ease !important; }
   .milk-pour-stream, .milk-pour-splash, .carton-milk-wave, .fee-glass-bubbles span, .fee-glass-drip {
     animation: none !important;
   }

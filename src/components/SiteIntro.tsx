@@ -104,17 +104,13 @@ export function SiteIntro({ onComplete }: SiteIntroProps = {}) {
         onEnded={finish}
       />
 
+      {/* Video already burns in "Wishing Well" — no HTML title overlay (avoids double text). */}
       <div className="site-intro__veil" aria-hidden />
 
-      <div className="site-intro__copy">
-        <p className="site-intro__eyebrow">Welcome to</p>
-        <h1 className="site-intro__title">Wish</h1>
-        <p className="site-intro__sub">Liquidity in the well</p>
-        <p className="site-intro__loading" aria-live="polite">
-          <span className="site-intro__loading-dot" aria-hidden />
-          Loading
-        </p>
-      </div>
+      <p className="site-intro__loading" aria-live="polite">
+        <span className="site-intro__loading-dot" aria-hidden />
+        Loading
+      </p>
 
       <button type="button" className="site-intro__skip" onClick={finish}>
         Skip
