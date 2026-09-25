@@ -58,13 +58,13 @@ export function Home() {
     <div>
       {/* Hero — art left / copy right (not milk text-left art-right) */}
       <section className="relative overflow-hidden cream-band">
-        <div className="container-page relative z-[1] py-4 lg:py-6">
+        <div className="container-page relative z-[1] py-2 lg:py-3">
           <div className="grid items-center gap-4 lg:grid-cols-12 lg:gap-4">
             <div className="relative order-1 flex justify-center lg:col-span-5 lg:order-1 lg:justify-start">
               <WellHero launches={launchCount} />
             </div>
 
-            <div className="relative order-2 space-y-3 lg:col-span-7 lg:order-2 lg:pl-3">
+            <div className="relative order-2 space-y-2 lg:col-span-7 lg:order-2 lg:pl-3">
               <div className="inline-flex items-center gap-2 rounded-full border border-rose-200/80 bg-cream-100/80 px-3 py-1 text-[11px] font-extrabold uppercase tracking-[0.14em] text-rose-400">
                 <CoinIcon className="h-3.5 w-3.5 text-rose-400" />
                 Liquidity in the well
@@ -143,7 +143,7 @@ export function Home() {
       </div>
 
       {/* Features — 3-step horizontal, not 5-card milk grid */}
-      <section className="container-page pb-2 pt-0">
+      <section className="container-page pb-1 pt-0">
         <div className="mb-3 max-w-xl">
           <p className="text-label mb-1.5">Path</p>
           <h2 className="text-title text-2xl sm:text-3xl">Three beats from wish to well</h2>
@@ -169,7 +169,7 @@ export function Home() {
       </div>
 
       {/* Featured — spotlight + side list */}
-      <section className="container-page pb-6">
+      <section className="container-page pb-3">
         <div className="mb-3 flex flex-wrap items-end justify-between gap-3">
           <div>
             <p className="text-label mb-1.5">On the board</p>
@@ -190,7 +190,7 @@ export function Home() {
         </div>
 
         {sorted.length === 0 ? (
-          <div className="well-panel px-5 py-10 text-center">
+          <div className="well-panel px-4 py-5 text-center">
             <EmptyGlass />
             <h3 className="mt-4 text-title text-xl">No launches yet. Go first.</h3>
             <p className="mx-auto mt-1.5 max-w-sm text-sm font-semibold text-ink-500">
