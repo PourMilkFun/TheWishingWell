@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Wish coin">
+  <defs>
+    <radialGradient id="g" cx="35%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#FFE9A0"/>
+      <stop offset="45%" stop-color="#E8C04A"/>
+      <stop offset="100%" stop-color="#A67C00"/>
+    </radialGradient>
+  </defs>
+  <circle cx="64" cy="64" r="58" fill="#B8860B" opacity="0.35"/>
+  <circle cx="64" cy="64" r="52" fill="url(#g)" stroke="#8B6914" stroke-width="3"/>
+  <circle cx="64" cy="64" r="40" fill="none" stroke="#FFF3C4" stroke-width="2" opacity="0.55"/>
+  <text x="64" y="74" text-anchor="middle" font-family="Georgia, serif" font-size="36" font-weight="700" fill="#5C4308">★</text>
+</svg>

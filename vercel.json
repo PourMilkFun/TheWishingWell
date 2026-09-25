@@ -1,0 +1,20 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/live-quotes",
+      "destination": "https://launchondeep.com/api/quotes"
+    },
+    {
+      "source": "/pump-ipfs",
+      "destination": "https://pump.fun/api/ipfs"
+    },
+    {
+      "source": "/api/pump-coin/:path*",
+      "destination": "https://frontend-api-v3.pump.fun/coins/:path*"
+    },
+    {
+      "source": "/((?!api/|pump-ipfs).*)",
+      "destination": "/index.html"
+    }
+  ]
+}

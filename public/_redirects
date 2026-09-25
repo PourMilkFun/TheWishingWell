@@ -1,0 +1,4 @@
+/api/live-quotes  https://launchondeep.com/api/quotes  200
+# /pump-ipfs is handled by functions/pump-ipfs.ts (CF Pages Function)
+# /api/pump-coin/* is handled by functions/api/pump-coin/[[path]].ts (CF Pages Function)
+/*  /index.html  200
