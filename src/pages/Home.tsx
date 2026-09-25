@@ -25,15 +25,15 @@ const features = [
     step: '01',
   },
   {
-    title: 'Buyback & Burn',
-    body: 'Vault SOL powers Buyback & Burn so volume recycles into the chart instead of vanishing.',
-    icon: <FlameIcon />,
-    step: '02',
-  },
-  {
     title: 'Locked LP',
     body: 'After graduation, liquidity becomes Locked LP. Less rug drama, more staying power.',
     icon: <LockIcon />,
+    step: '02',
+  },
+  {
+    title: 'Buyback & Burn',
+    body: 'Vault SOL powers Buyback & Burn so volume recycles into the chart instead of vanishing.',
+    icon: <FlameIcon />,
     step: '03',
   },
 ]
@@ -58,8 +58,8 @@ export function Home() {
     <div>
       {/* Hero — art left / copy right (not milk text-left art-right) */}
       <section className="relative overflow-hidden cream-band">
-        <div className="container-page relative z-[1] py-8 lg:py-10">
-          <div className="grid items-center gap-6 lg:grid-cols-12 lg:gap-6">
+        <div className="container-page relative z-[1] py-4 lg:py-6">
+          <div className="grid items-center gap-4 lg:grid-cols-12 lg:gap-4">
             <div className="relative order-1 flex justify-center lg:col-span-5 lg:order-1 lg:justify-start">
               <WellHero launches={launchCount} />
             </div>
@@ -112,7 +112,7 @@ export function Home() {
           </div>
 
           {/* Well + status strip overlapping hero band */}
-          <div className="mt-6 grid gap-3 lg:grid-cols-5 lg:items-stretch">
+          <div className="mt-3 grid gap-3 lg:grid-cols-5 lg:items-stretch">
             <div className="well-panel lg:col-span-3 p-1">
               <FeeVaultPanel />
             </div>
@@ -138,20 +138,20 @@ export function Home() {
         </div>
       </section>
 
-      <div className="py-4">
+      <div className="py-1">
         <StarDivider />
       </div>
 
       {/* Features — 3-step horizontal, not 5-card milk grid */}
-      <section className="container-page pb-4 pt-1">
-        <div className="mb-5 max-w-xl">
+      <section className="container-page pb-2 pt-0">
+        <div className="mb-3 max-w-xl">
           <p className="text-label mb-1.5">Path</p>
           <h2 className="text-title text-2xl sm:text-3xl">Three beats from wish to well</h2>
         </div>
         <div className="grid gap-4 md:grid-cols-3">
           {features.map((f) => (
-            <div key={f.title} className="well-panel relative overflow-hidden p-4">
-              <div className="mb-3 flex items-center justify-between">
+            <div key={f.title} className="well-panel relative overflow-hidden p-3">
+              <div className="mb-2 flex items-center justify-between">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-rose-200/60 bg-rose-50/40">
                   {f.icon}
                 </div>
@@ -164,13 +164,13 @@ export function Home() {
         </div>
       </section>
 
-      <div className="py-4">
+      <div className="py-1">
         <StarDivider />
       </div>
 
       {/* Featured — spotlight + side list */}
-      <section className="container-page pb-12">
-        <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
+      <section className="container-page pb-6">
+        <div className="mb-3 flex flex-wrap items-end justify-between gap-3">
           <div>
             <p className="text-label mb-1.5">On the board</p>
             <h2 className="text-title text-2xl sm:text-3xl">Recent launches</h2>
