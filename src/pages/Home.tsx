@@ -58,29 +58,29 @@ export function Home() {
     <div>
       {/* Hero — art left / copy right (not milk text-left art-right) */}
       <section className="relative overflow-hidden cream-band">
-        <div className="container-page relative z-[1] py-12 lg:py-16">
-          <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-8">
+        <div className="container-page relative z-[1] py-8 lg:py-10">
+          <div className="grid items-center gap-6 lg:grid-cols-12 lg:gap-6">
             <div className="relative order-1 flex justify-center lg:col-span-5 lg:order-1 lg:justify-start">
               <WellHero launches={launchCount} />
             </div>
 
-            <div className="relative order-2 space-y-5 lg:col-span-7 lg:order-2 lg:pl-4">
+            <div className="relative order-2 space-y-3 lg:col-span-7 lg:order-2 lg:pl-3">
               <div className="inline-flex items-center gap-2 rounded-full border border-rose-200/80 bg-cream-100/80 px-3 py-1 text-[11px] font-extrabold uppercase tracking-[0.14em] text-rose-400">
                 <CoinIcon className="h-3.5 w-3.5 text-rose-400" />
                 Liquidity in the well
               </div>
 
-              <h1 className="text-display-hero text-[2.75rem] leading-[1.05] sm:text-5xl lg:text-[3.75rem]">
+              <h1 className="text-display-hero text-[2.35rem] leading-[1.05] sm:text-4xl lg:text-[3.15rem]">
                 Toss a wish.{' '}
                 <span className="text-rose-400">Liquidity stays.</span>
               </h1>
 
-              <p className="max-w-md text-base font-semibold leading-relaxed text-ink-500 sm:text-lg">
+              <p className="max-w-md text-sm font-semibold leading-relaxed text-ink-500 sm:text-base">
                 Wish is a liquidity fountain: gold fees drop into The Well, then power Buyback &amp; Burn
                 and Locked LP on Pump.
               </p>
 
-              <div className="flex flex-wrap gap-3 pt-1">
+              <div className="flex flex-wrap gap-2.5 pt-0.5">
                 <Link to="/launch" className="btn-primary">
                   Cast a wish
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
@@ -98,7 +98,7 @@ export function Home() {
                 </Link>
               </div>
 
-              <div className="flex flex-wrap items-center gap-3 pt-2 text-[11px] font-extrabold uppercase tracking-wider text-ink-400">
+              <div className="flex flex-wrap items-center gap-2.5 pt-1 text-[11px] font-extrabold uppercase tracking-wider text-ink-400">
                 <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200/70 bg-emerald-50 px-2.5 py-1 text-emerald-700">
                   <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" />
                   Live
@@ -112,11 +112,11 @@ export function Home() {
           </div>
 
           {/* Well + status strip overlapping hero band */}
-          <div className="mt-12 grid gap-4 lg:grid-cols-5 lg:items-stretch">
+          <div className="mt-6 grid gap-3 lg:grid-cols-5 lg:items-stretch">
             <div className="well-panel lg:col-span-3 p-1">
               <FeeVaultPanel />
             </div>
-            <div className="well-panel flex flex-col justify-center gap-4 p-5 lg:col-span-2">
+            <div className="well-panel flex flex-col justify-center gap-3 p-4 lg:col-span-2">
               <div>
                 <p className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-rose-400">
                   Network
@@ -138,20 +138,20 @@ export function Home() {
         </div>
       </section>
 
-      <div className="py-8">
+      <div className="py-4">
         <StarDivider />
       </div>
 
       {/* Features — 3-step horizontal, not 5-card milk grid */}
-      <section className="container-page pb-6 pt-2">
-        <div className="mb-8 max-w-xl">
-          <p className="text-label mb-2">Path</p>
-          <h2 className="text-title text-3xl sm:text-4xl">Three beats from wish to well</h2>
+      <section className="container-page pb-4 pt-1">
+        <div className="mb-5 max-w-xl">
+          <p className="text-label mb-1.5">Path</p>
+          <h2 className="text-title text-2xl sm:text-3xl">Three beats from wish to well</h2>
         </div>
         <div className="grid gap-4 md:grid-cols-3">
           {features.map((f) => (
-            <div key={f.title} className="well-panel relative overflow-hidden p-5">
-              <div className="mb-4 flex items-center justify-between">
+            <div key={f.title} className="well-panel relative overflow-hidden p-4">
+              <div className="mb-3 flex items-center justify-between">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-rose-200/60 bg-rose-50/40">
                   {f.icon}
                 </div>
@@ -164,20 +164,20 @@ export function Home() {
         </div>
       </section>
 
-      <div className="py-10">
+      <div className="py-4">
         <StarDivider />
       </div>
 
       {/* Featured — spotlight + side list */}
-      <section className="container-page pb-24">
-        <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+      <section className="container-page pb-12">
+        <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
           <div>
-            <p className="text-label mb-2">On the board</p>
-            <h2 className="text-title text-3xl">Recent launches</h2>
-            <p className="mt-2 text-sm font-semibold text-ink-500">
+            <p className="text-label mb-1.5">On the board</p>
+            <h2 className="text-title text-2xl sm:text-3xl">Recent launches</h2>
+            <p className="mt-1.5 text-sm font-semibold text-ink-500">
               Real on-chain creates only. No demo tickers in the feed.
             </p>
-            <div className="mt-4">
+            <div className="mt-3">
               <LaunchSortFilters value={sort} onChange={setSort} />
             </div>
           </div>
@@ -190,19 +190,19 @@ export function Home() {
         </div>
 
         {sorted.length === 0 ? (
-          <div className="well-panel px-6 py-16 text-center">
+          <div className="well-panel px-5 py-10 text-center">
             <EmptyGlass />
-            <h3 className="mt-5 text-title text-xl">No launches yet. Go first.</h3>
-            <p className="mx-auto mt-2 max-w-sm text-sm font-semibold text-ink-500">
+            <h3 className="mt-4 text-title text-xl">No launches yet. Go first.</h3>
+            <p className="mx-auto mt-1.5 max-w-sm text-sm font-semibold text-ink-500">
               Deploy on Pump with well-ready fee routing. Your coin shows up here when it lands
               on-chain.
             </p>
-            <Link to="/launch" className="btn-primary mt-7">
+            <Link to="/launch" className="btn-primary mt-5">
               Cast a wish
             </Link>
           </div>
         ) : (
-          <div className="grid gap-6 lg:grid-cols-5">
+          <div className="grid gap-4 lg:grid-cols-5">
             {spotlight && (
               <div className="lg:col-span-3">
                 <p className="mb-3 text-[10px] font-extrabold uppercase tracking-[0.16em] text-rose-400">

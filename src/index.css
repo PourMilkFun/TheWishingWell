@@ -907,12 +907,16 @@
 .site-intro__veil {
   position: absolute; inset: 0;
   background:
-    radial-gradient(ellipse 60% 48% at 50% 46%, rgba(205, 229, 255, 0.15) 0%, transparent 72%),
-    linear-gradient(180deg, rgba(205, 229, 255, 0.35) 0%, transparent 28%, transparent 72%, rgba(255, 246, 240, 0.45) 100%);
+    radial-gradient(ellipse 70% 40% at 50% 12%, rgba(205, 229, 255, 0.55) 0%, transparent 70%),
+    linear-gradient(180deg, rgba(205, 229, 255, 0.55) 0%, rgba(205, 229, 255, 0.22) 18%, transparent 36%, transparent 72%, rgba(255, 246, 240, 0.4) 100%);
   pointer-events: none;
 }
 .site-intro__copy {
-  position: relative; z-index: 2; text-align: center; padding: 1.5rem;
+  /* Top of frame — clears mid-video "Wishing Well" burn-in */
+  position: absolute; z-index: 2; top: 0; left: 0; right: 0;
+  text-align: center;
+  padding: clamp(1.75rem, 5vh, 3rem) 1.5rem 2.25rem;
+  background: linear-gradient(180deg, rgba(205, 229, 255, 0.78) 0%, rgba(205, 229, 255, 0.42) 62%, transparent 100%);
   animation: intro-rise 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 .site-intro__eyebrow {
@@ -966,7 +970,7 @@
 }
 .site-intro__skip:hover { background: #fff; transform: translateY(-1px); }
 @keyframes intro-rise {
-  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+  from { opacity: 0; transform: translateY(-14px) scale(0.98); }
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
 @media (prefers-reduced-motion: reduce) {
