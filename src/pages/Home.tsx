@@ -207,14 +207,14 @@ export function Home() {
         ) : (
           <div className="grid gap-3 lg:grid-cols-12 lg:items-start">
             {spotlight && (
-              <div className="lg:col-span-9">
+              <div className="mx-auto w-full max-w-sm lg:col-span-5 lg:mx-0 lg:max-w-none">
                 <p className="mb-2 text-[10px] font-extrabold uppercase tracking-[0.16em] text-rose-400">
                   Spotlight
                 </p>
                 <CoinCard coin={spotlight} />
               </div>
             )}
-            <div className="flex flex-col gap-1.5 lg:col-span-3">
+            <div className="flex flex-col gap-2 lg:col-span-7">
               <p className="mb-0.5 text-[9px] font-extrabold uppercase tracking-[0.14em] text-rose-400">
                 More on the board
               </p>
@@ -227,9 +227,9 @@ export function Home() {
                   <Link
                     key={c.id}
                     to={`/coin/${c.id}`}
-                    className="well-panel flex items-center gap-2 px-2 py-1.5 transition hover:border-rose-300/60"
+                    className="well-panel flex items-center gap-3 px-3 py-2.5 transition hover:border-rose-300/60"
                   >
-                    <div className="relative h-7 w-7 shrink-0 overflow-hidden rounded-lg bg-cream-200">
+                    <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-xl bg-cream-200">
                       <TokenImage
                         url={c.imageUrl}
                         thumb={c.imageThumb}
@@ -240,10 +240,10 @@ export function Home() {
                       />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="truncate font-display text-[12px] font-semibold leading-tight text-ink-900">
+                      <p className="truncate font-display text-sm font-semibold leading-tight text-ink-900">
                         {c.name}
                       </p>
-                      <p className="font-mono text-[10px] font-bold leading-tight text-rose-400">
+                      <p className="font-mono text-[11px] font-bold leading-tight text-rose-400">
                         ${c.ticker}
                       </p>
                     </div>
