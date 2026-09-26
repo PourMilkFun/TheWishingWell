@@ -21,6 +21,10 @@ npm run preview
 | Variable | Purpose |
 |----------|---------|
 | `VITE_SOLANA_RPC` | Mainnet RPC URL (default: `https://solana-rpc.publicnode.com`) |
+| `VITE_FEE_VAULT_WALLET` | Vault wallet for claimed-fee metering |
+| `VITE_FEE_VAULT_TARGET_SOL` | Soft fill target for the vault meter (default 10) |
+| `VITE_FEE_VAULT_CLAIM_SINCE` | Unix/ISO cutoff; only `CollectCreatorFee` credits after this count (default `2026-09-26T00:00:00Z`) |
+| `VITE_FEE_VAULT_WISH_MINT` | Optional mint filter for claim txs (default Wish mint) |
 
 ## Wallet
 

@@ -32,14 +32,33 @@ export const FEE_VAULT_TARGET_SOL = (() => {
 })()
 
 /**
- * Display baseline for the vault UI (SOL). Shown balance = max(0, on-chain − baseline).
- * Snapshot of wallet 6urQ…Wish at reset (~1.082 SOL) so the UI starts at 0; new inbound SOL
- * shows as the delta. Override with `VITE_FEE_VAULT_BASELINE_SOL`.
+ * Optional Wish mint filter for vault claim metering.
+ * When set, prefer counting CollectCreatorFee credits that touch this mint;
+ * if mint involvement is ambiguous, any vault claim credit still counts.
+ * Override with `VITE_FEE_VAULT_WISH_MINT`.
  */
-export const FEE_VAULT_BASELINE_SOL = (() => {
-  const raw = (import.meta.env.VITE_FEE_VAULT_BASELINE_SOL as string | undefined)?.trim()
-  const n = raw ? Number(raw) : 1.082350573
-  return Number.isFinite(n) && n >= 0 ? n : 1.082350573
+export const FEE_VAULT_WISH_MINT =
+  (import.meta.env.VITE_FEE_VAULT_WISH_MINT as string | undefined)?.trim() ||
+  'FxqmVuCGriC53qGsm8E8CeUAZiE5BRLc7kY8CYTXpump'
+
+/**
+ * Only count creator-fee claims with blockTime >= this instant (unix seconds).
+ * Accepts unix seconds or an ISO timestamp via `VITE_FEE_VAULT_CLAIM_SINCE`.
+ * Default: 2026-09-26T00:00:00Z — vault UI reset; prior balance / non-claim
+ * inbound SOL does not count toward the meter.
+ */
+export const FEE_VAULT_CLAIM_SINCE = (() => {
+  const raw = (import.meta.env.VITE_FEE_VAULT_CLAIM_SINCE as string | undefined)?.trim()
+  const fallback = Date.parse('2026-09-26T00:00:00Z')
+  if (!raw) return Math.floor(fallback / 1000)
+  const asNum = Number(raw)
+  if (Number.isFinite(asNum) && asNum > 1_000_000_000) {
+    // Unix seconds (or ms if huge)
+    return asNum > 1e12 ? Math.floor(asNum / 1000) : Math.floor(asNum)
+  }
+  const parsed = Date.parse(raw)
+  if (Number.isFinite(parsed)) return Math.floor(parsed / 1000)
+  return Math.floor(fallback / 1000)
 })()
 
 /** Seed / demo mints that must not hit DexScreener or Pump APIs. */
@@ -58,4 +77,3 @@ export function isPlaceholderMint(mint?: string | null): boolean {
 export function isLiveChartMint(mint?: string | null): boolean {
   return Boolean(mint) && !isPlaceholderMint(mint)
 }
-

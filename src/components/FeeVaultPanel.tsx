@@ -5,7 +5,7 @@ function shortAddr(a: string) {
   return a.length > 10 ? `${a.slice(0, 4)}…${a.slice(-4)}` : a
 }
 
-/** Live fee vault — The Well — driven by wallet SOL balance. */
+/** Live fee vault — The Well — driven by claimed creator fees into the vault wallet. */
 export function FeeVaultPanel() {
   const { sol, targetSol, pct, wallet, loading, error } = useFeeVaultSol()
 
@@ -34,7 +34,7 @@ export function FeeVaultPanel() {
       <div className="relative mb-5 flex flex-wrap items-start justify-between gap-3">
         <div>
           <p className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-rose-400">
-            Vault wallet · live SOL
+            Vault wallet · claimed fees
           </p>
           <p className="mt-1 font-display text-2xl font-semibold tabular-nums text-ink-900 sm:text-3xl">
             {loading && sol === 0 ? '…' : formatSol(sol)}
@@ -72,7 +72,7 @@ export function FeeVaultPanel() {
 
         <div className="w-full flex-1 space-y-3">
           <div className="flex items-baseline justify-between gap-2 text-xs font-extrabold uppercase tracking-wider text-ink-400">
-            <span>Fees collected</span>
+            <span>Claimed fees</span>
             <span className="tabular-nums text-rose-500">
               {formatSol(sol)} / {formatSol(targetSol)}
             </span>
@@ -84,10 +84,11 @@ export function FeeVaultPanel() {
             />
           </div>
           <p className="text-xs font-semibold leading-relaxed text-ink-500">
-            Creator fees drop into The Well as SOL. Buyback & Burn and Locked LP draw from the same gold vault.
+            Meter tracks Pump creator fees claimed into The Well (not raw wallet balance). Buyback
+            &amp; Burn and Locked LP draw from the same gold vault.
           </p>
           {error && (
-            <p className="text-[11px] font-semibold text-rose-500">Couldn’t refresh balance. Retrying.</p>
+            <p className="text-[11px] font-semibold text-rose-500">Couldn’t refresh claims. Retrying.</p>
           )}
         </div>
       </div>

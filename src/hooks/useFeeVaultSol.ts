@@ -1,56 +1,77 @@
-import { useCallback, useEffect, useState } from 'react'
-import { Connection, PublicKey, LAMPORTS_PER_SOL } from '@solana/web3.js'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { Connection } from '@solana/web3.js'
 import {
-  FEE_VAULT_BASELINE_SOL,
+  FEE_VAULT_CLAIM_SINCE,
   FEE_VAULT_TARGET_SOL,
   FEE_VAULT_WALLET,
+  FEE_VAULT_WISH_MINT,
   SOLANA_RPC,
 } from '../lib/constants'
+import { sumClaimedCreatorFees } from '../lib/feeVaultClaims'
 
 export type FeeVaultState = {
-  /** Display SOL after subtracting the display baseline (never negative). */
+  /** Display SOL = sum of claimed creator-fee credits since FEE_VAULT_CLAIM_SINCE (never negative). */
   sol: number
-  /** Raw on-chain wallet balance (before baseline). */
-  onChainSol: number
   targetSol: number
   pct: number
   wallet: string | null
   loading: boolean
   error: string | null
   refreshedAt: number | null
+  claimCount: number
 }
 
 /**
- * Live SOL balance of the fee vault wallet, shown relative to FEE_VAULT_BASELINE_SOL
- * so a UI "reset to 0" does not require emptying the on-chain wallet.
- * Set address via VITE_FEE_VAULT_WALLET — until then sol stays 0.
+ * Home vault meter: SOL increases only when Pump creator fees are *claimed*
+ * into the vault wallet (logs containing CollectCreatorFee / CollectCoinCreatorFee),
+ * not from raw wallet balance or non-claim inbound transfers.
+ * Until the first such claim after FEE_VAULT_CLAIM_SINCE, display stays 0.00 SOL.
+ * RPC failures keep the last good sum.
  */
-export function useFeeVaultSol(pollMs = 30_000): FeeVaultState {
-  const [onChainSol, setOnChainSol] = useState(0)
+export function useFeeVaultSol(pollMs = 45_000): FeeVaultState {
+  const [sol, setSol] = useState(0)
+  const [claimCount, setClaimCount] = useState(0)
   const [loading, setLoading] = useState(Boolean(FEE_VAULT_WALLET))
   const [error, setError] = useState<string | null>(null)
   const [refreshedAt, setRefreshedAt] = useState<number | null>(null)
+  const lastGoodSol = useRef(0)
+  const lastGoodClaims = useRef(0)
+  const inFlight = useRef(false)
 
   const refresh = useCallback(async () => {
     if (!FEE_VAULT_WALLET) {
-      setOnChainSol(0)
+      setSol(0)
+      setClaimCount(0)
       setLoading(false)
       setError(null)
       return
     }
+    if (inFlight.current) return
+    inFlight.current = true
     setLoading(true)
     try {
-      const key = new PublicKey(FEE_VAULT_WALLET)
       const connection = new Connection(SOLANA_RPC, 'confirmed')
-      const lamports = await connection.getBalance(key, 'confirmed')
-      const next = lamports / LAMPORTS_PER_SOL
-      setOnChainSol(next)
+      const result = await sumClaimedCreatorFees({
+        connection,
+        vaultWallet: FEE_VAULT_WALLET,
+        sinceUnix: FEE_VAULT_CLAIM_SINCE,
+        wishMint: FEE_VAULT_WISH_MINT,
+      })
+      const next = Number.isFinite(result.sol) ? Math.max(0, result.sol) : 0
+      lastGoodSol.current = next
+      lastGoodClaims.current = result.claimCount
+      setSol(next)
+      setClaimCount(result.claimCount)
       setError(null)
       setRefreshedAt(Date.now())
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Failed to read vault balance')
+      // Keep last good sum on RPC failure.
+      setSol(lastGoodSol.current)
+      setClaimCount(lastGoodClaims.current)
+      setError(e instanceof Error ? e.message : 'Failed to scan vault claims')
     } finally {
       setLoading(false)
+      inFlight.current = false
     }
   }, [])
 
@@ -66,20 +87,17 @@ export function useFeeVaultSol(pollMs = 30_000): FeeVaultState {
     }
   }, [refresh, pollMs])
 
-  const rawDelta = onChainSol - FEE_VAULT_BASELINE_SOL
-  // Never show negatives if balance dips below the display baseline.
-  const sol = Number.isFinite(rawDelta) ? Math.max(0, rawDelta) : 0
   const targetSol = Math.max(FEE_VAULT_TARGET_SOL, sol > 0 ? sol : FEE_VAULT_TARGET_SOL)
   const pct = Math.min(100, Math.round((sol / targetSol) * 100))
 
   return {
     sol,
-    onChainSol,
     targetSol,
     pct,
     wallet: FEE_VAULT_WALLET || null,
     loading,
     error,
     refreshedAt,
+    claimCount,
   }
 }
