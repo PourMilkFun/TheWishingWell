@@ -5,7 +5,7 @@ function shortAddr(a: string) {
   return a.length > 10 ? `${a.slice(0, 4)}…${a.slice(-4)}` : a
 }
 
-/** Live fee vault — The Well — shows the vault wallet SOL balance. */
+/** Fee vault — claimed creator fees only (baseline 0 until CollectCreatorFee). */
 export function FeeVaultPanel() {
   const { sol, wallet, loading, error } = useFeeVaultSol()
 
@@ -25,7 +25,7 @@ export function FeeVaultPanel() {
       <div className="relative mb-5 flex flex-wrap items-start justify-between gap-3">
         <div>
           <p className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-rose-400">
-            Vault wallet · live balance
+            Vault · claimed creator fees
           </p>
           <p className="mt-1 font-display text-2xl font-semibold tabular-nums text-ink-900 sm:text-3xl">
             {loading && sol === 0 ? '…' : formatSol(sol)}
@@ -56,10 +56,11 @@ export function FeeVaultPanel() {
 
         <div className="w-full flex-1 space-y-3">
           <p className="text-xs font-semibold leading-relaxed text-ink-500">
-            Live SOL in The Well. Buyback &amp; Burn and Locked LP draw from this gold vault.
+            Starts at 0.00 SOL and only rises when Pump creator fees are claimed into this wallet —
+            not raw balance. Buyback &amp; Burn and Locked LP draw from The Well.
           </p>
           {error && (
-            <p className="text-[11px] font-semibold text-rose-500">Couldn’t refresh balance. Retrying.</p>
+            <p className="text-[11px] font-semibold text-rose-500">Couldn’t refresh claims. Retrying.</p>
           )}
         </div>
       </div>

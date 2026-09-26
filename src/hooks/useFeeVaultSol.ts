@@ -1,30 +1,43 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Connection, PublicKey, LAMPORTS_PER_SOL } from '@solana/web3.js'
-import { FEE_VAULT_WALLET, SOLANA_RPC } from '../lib/constants'
+import { Connection } from '@solana/web3.js'
+import {
+  FEE_VAULT_CLAIM_SINCE,
+  FEE_VAULT_WALLET,
+  FEE_VAULT_WISH_MINT,
+  SOLANA_RPC,
+} from '../lib/constants'
+import { sumClaimedCreatorFees } from '../lib/feeVaultClaims'
 
 export type FeeVaultState = {
-  /** Live SOL balance of the vault wallet. */
+  /** SOL = sum of claimed creator-fee credits since FEE_VAULT_CLAIM_SINCE (never negative). */
   sol: number
   wallet: string | null
   loading: boolean
   error: string | null
   refreshedAt: number | null
+  claimCount: number
 }
 
 /**
- * Home vault panel: live SOL balance of the fee vault wallet (getBalance).
+ * Home vault: SOL increases only when Pump creator fees are *claimed*
+ * into the vault wallet (CollectCreatorFee / CollectCoinCreatorFee).
+ * Raw wallet balance and non-claim inbound transfers do not count.
+ * Until the first such claim after FEE_VAULT_CLAIM_SINCE, display stays 0.00 SOL.
  */
-export function useFeeVaultSol(pollMs = 30_000): FeeVaultState {
+export function useFeeVaultSol(pollMs = 45_000): FeeVaultState {
   const [sol, setSol] = useState(0)
+  const [claimCount, setClaimCount] = useState(0)
   const [loading, setLoading] = useState(Boolean(FEE_VAULT_WALLET))
   const [error, setError] = useState<string | null>(null)
   const [refreshedAt, setRefreshedAt] = useState<number | null>(null)
   const lastGoodSol = useRef(0)
+  const lastGoodClaims = useRef(0)
   const inFlight = useRef(false)
 
   const refresh = useCallback(async () => {
     if (!FEE_VAULT_WALLET) {
       setSol(0)
+      setClaimCount(0)
       setLoading(false)
       setError(null)
       return
@@ -34,15 +47,23 @@ export function useFeeVaultSol(pollMs = 30_000): FeeVaultState {
     setLoading(true)
     try {
       const connection = new Connection(SOLANA_RPC, 'confirmed')
-      const lamports = await connection.getBalance(new PublicKey(FEE_VAULT_WALLET), 'confirmed')
-      const next = Math.max(0, lamports / LAMPORTS_PER_SOL)
+      const result = await sumClaimedCreatorFees({
+        connection,
+        vaultWallet: FEE_VAULT_WALLET,
+        sinceUnix: FEE_VAULT_CLAIM_SINCE,
+        wishMint: FEE_VAULT_WISH_MINT,
+      })
+      const next = Number.isFinite(result.sol) ? Math.max(0, result.sol) : 0
       lastGoodSol.current = next
+      lastGoodClaims.current = result.claimCount
       setSol(next)
+      setClaimCount(result.claimCount)
       setError(null)
       setRefreshedAt(Date.now())
     } catch (e) {
       setSol(lastGoodSol.current)
-      setError(e instanceof Error ? e.message : 'Failed to read vault balance')
+      setClaimCount(lastGoodClaims.current)
+      setError(e instanceof Error ? e.message : 'Failed to scan vault claims')
     } finally {
       setLoading(false)
       inFlight.current = false
@@ -67,5 +88,6 @@ export function useFeeVaultSol(pollMs = 30_000): FeeVaultState {
     loading,
     error,
     refreshedAt,
+    claimCount,
   }
 }
