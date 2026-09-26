@@ -178,7 +178,7 @@ export function myLaunchToCoin(launch: MyLaunch): Coin {
     ticker: launch.ticker,
     description: launch.description || `Launched on Wish · pair ${launch.quoteTicker}`,
     imageGradient: gradients[launch.mint.charCodeAt(0) % gradients.length],
-    emoji: '🥛',
+    emoji: '🪙',
     bondingProgress: 0,
     marketCap: 0,
     liquidity: 0,

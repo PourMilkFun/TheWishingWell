@@ -16,6 +16,6 @@ export const SITE_LAUNCHES: MyLaunch[] = [
     pairMode: 'sol',
     signature: 'site-seeded',
     createdAt: '2026-09-25T21:00:00.000Z',
-    socials: { website: 'https://wish.well' },
+    socials: { website: 'https://thewishingwell.lol' },
   },
 ]

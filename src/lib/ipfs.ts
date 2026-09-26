@@ -19,6 +19,8 @@ export function isUsableImageUrl(url: string | undefined | null): boolean {
   const u = (url || '').trim()
   if (!u) return false
   if (/^(blob:|data:)/i.test(u)) return false
+  // Same-origin site assets (e.g. /tokens/wish-token.png)
+  if (u.startsWith('/') && !u.startsWith('//')) return true
   return /^https?:\/\//i.test(u)
 }
 
@@ -27,6 +29,7 @@ export function isDisplayableImageSrc(url: string | undefined | null): boolean {
   const u = (url || '').trim()
   if (!u) return false
   if (/^data:image\//i.test(u)) return true
+  if (u.startsWith('/') && !u.startsWith('//')) return true
   return isUsableImageUrl(u)
 }
 
@@ -71,6 +74,7 @@ export function ipfsGatewayCandidates(url: string): string[] {
   if (!trimmed) return []
   const path = extractIpfsPath(trimmed)
   if (!path) {
+    if (trimmed.startsWith('/') && !trimmed.startsWith('//')) return [trimmed]
     return isUsableImageUrl(trimmed) ? [trimmed] : []
   }
   const out: string[] = []
