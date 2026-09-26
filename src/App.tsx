@@ -1,6 +1,8 @@
+import { useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { SolanaProvider } from './wallet/SolanaProvider'
 import { Layout } from './components/Layout'
+import { SiteIntro, shouldShowIntro } from './components/SiteIntro'
 import { Home } from './pages/Home'
 import { Launches } from './pages/Launches'
 import { Launch } from './pages/Launch'
@@ -9,6 +11,12 @@ import { Mechanics } from './pages/Mechanics'
 import { Docs, DocsIndexRedirect } from './pages/Docs'
 
 export default function App() {
+  const [introDone, setIntroDone] = useState(() => !shouldShowIntro())
+
+  if (!introDone) {
+    return <SiteIntro onComplete={() => setIntroDone(true)} />
+  }
+
   return (
     <SolanaProvider>
       <BrowserRouter>
