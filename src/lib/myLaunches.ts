@@ -67,8 +67,24 @@ function write(list: MyLaunch[]) {
 function mergeSiteLaunches(local: MyLaunch[]): MyLaunch[] {
   const byMint = new Map<string, MyLaunch>()
   for (const s of SITE_LAUNCHES) byMint.set(s.mint, s)
-  // Local saves override site seeds for the same mint (e.g. fresher art/signature).
-  for (const l of local) byMint.set(l.mint, l)
+  // Local saves override site seeds for the same mint (e.g. fresher art/signature),
+  // but never wipe a good site image with a blank/blob local URL (emoji fallback).
+  for (const l of local) {
+    const site = byMint.get(l.mint)
+    if (!site) {
+      byMint.set(l.mint, l)
+      continue
+    }
+    const localImg = (l.imageUrl || '').trim()
+    const siteImg = (site.imageUrl || '').trim()
+    const keepSiteArt = Boolean(siteImg && isUsableImageUrl(siteImg) && !isUsableImageUrl(localImg))
+    byMint.set(l.mint, {
+      ...site,
+      ...l,
+      imageUrl: keepSiteArt ? siteImg : localImg || siteImg,
+      imageThumb: keepSiteArt ? site.imageThumb : l.imageThumb || site.imageThumb,
+    })
+  }
   return [...byMint.values()]
 }
 

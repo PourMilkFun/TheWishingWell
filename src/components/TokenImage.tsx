@@ -23,7 +23,7 @@ type Props = {
 export function TokenImage({
   url,
   thumb,
-  emoji = '🥛',
+  emoji = '',
   className,
   imgClassName = 'absolute inset-0 h-full w-full object-cover',
   emojiClassName = 'relative z-[1] text-3xl drop-shadow-md',
@@ -57,7 +57,11 @@ export function TokenImage({
   if (!showImg) {
     return (
       <div className={className}>
-        <span className={emojiClassName}>{emoji}</span>
+        {emoji ? (
+          <span className={emojiClassName}>{emoji}</span>
+        ) : (
+          <div className="absolute inset-0 bg-black/10" aria-hidden />
+        )}
       </div>
     )
   }
@@ -75,7 +79,9 @@ export function TokenImage({
       />
       {/* Keep emoji in DOM only as last resort when idx past end */}
       {idx >= candidates.length ? (
-        <span className={emojiClassName}>{emoji}</span>
+        emoji ? <span className={emojiClassName}>{emoji}</span> : (
+          <div className="absolute inset-0 bg-black/10" aria-hidden />
+        )
       ) : null}
     </div>
   )

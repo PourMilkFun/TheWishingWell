@@ -24,7 +24,7 @@ export const SITE_LAUNCHES: MyLaunch[] = [
     name: 'Test the Wish',
     ticker: 'TEST',
     description: 'Test — launched on The Wishing Well.',
-    imageUrl: '/tokens/test-token.jpg',
+    imageUrl: '/tokens/test-token.jpg?v=1',
     imageThumb: undefined,
     metadataUri: 'ipfs://bafkreif6w3s2qfhbyfpskjh2yohy5tlae3o7ld57sanbcfqit4mjgy2mv4',
     creatorFee: 1,
