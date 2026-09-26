@@ -5,12 +5,13 @@ export interface MetadataUploadResult {
   imageUri?: string
 }
 
-const PREFERRED_GATEWAY = 'https://nftstorage.link'
+const PREFERRED_GATEWAY = 'https://pump.mypinata.cloud'
 
 const GATEWAY_ORIGINS = [
+  'https://pump.mypinata.cloud',
+  'https://gateway.pinata.cloud',
   'https://nftstorage.link',
   'https://dweb.link',
-  'https://cloudflare-ipfs.com',
   'https://ipfs.io',
 ] as const
 

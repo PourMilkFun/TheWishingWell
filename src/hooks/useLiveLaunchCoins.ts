@@ -49,9 +49,16 @@ export function useLiveLaunchCoins(): { coins: Coin[]; loading: boolean; count: 
           const s = map.get(mint)
           if (!s) return c
 
-          // Always prefer a usable Pump image over local empty/bad URLs.
-          const pumpImage = s.imageUrl && isUsableImageUrl(s.imageUrl) ? rewriteIpfsGateway(s.imageUrl) : undefined
-          const nextImage = pumpImage || undefined
+          // Prefer Pump art only when we don't already have durable same-origin
+          // site art (/tokens/…). Pump IPFS gateways often 429 and wipe the card to emoji.
+          const pumpImage =
+            s.imageUrl && isUsableImageUrl(s.imageUrl) ? rewriteIpfsGateway(s.imageUrl) : undefined
+          const hasSiteArt = Boolean(
+            c.imageUrl &&
+              (c.imageUrl.startsWith('/tokens/') ||
+                (c.imageUrl.startsWith('/') && !c.imageUrl.startsWith('//'))),
+          )
+          const nextImage = hasSiteArt ? undefined : pumpImage || undefined
           if (nextImage && nextImage !== c.imageUrl) {
             imagePatches.push({ mint, imageUrl: nextImage })
           }

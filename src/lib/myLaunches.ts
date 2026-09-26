@@ -67,8 +67,8 @@ function write(list: MyLaunch[]) {
 function mergeSiteLaunches(local: MyLaunch[]): MyLaunch[] {
   const byMint = new Map<string, MyLaunch>()
   for (const s of SITE_LAUNCHES) byMint.set(s.mint, s)
-  // Local saves override site seeds for the same mint (e.g. fresher art/signature),
-  // but never wipe a good site image with a blank/blob local URL (emoji fallback).
+  // Local saves override site seeds for signature/name, but curated /tokens art
+  // on SITE_LAUNCHES always wins — Pump IPFS URLs in localStorage cause emoji fallback.
   for (const l of local) {
     const site = byMint.get(l.mint)
     if (!site) {
@@ -77,12 +77,13 @@ function mergeSiteLaunches(local: MyLaunch[]): MyLaunch[] {
     }
     const localImg = (l.imageUrl || '').trim()
     const siteImg = (site.imageUrl || '').trim()
-    const keepSiteArt = Boolean(siteImg && isUsableImageUrl(siteImg) && !isUsableImageUrl(localImg))
+    const preferSiteArt = Boolean(siteImg && isUsableImageUrl(siteImg))
     byMint.set(l.mint, {
       ...site,
       ...l,
-      imageUrl: keepSiteArt ? siteImg : localImg || siteImg,
-      imageThumb: keepSiteArt ? site.imageThumb : l.imageThumb || site.imageThumb,
+      imageUrl: preferSiteArt ? siteImg : localImg || siteImg,
+      imageThumb: preferSiteArt ? site.imageThumb || l.imageThumb : l.imageThumb || site.imageThumb,
+      metadataUri: site.metadataUri || l.metadataUri,
     })
   }
   return [...byMint.values()]
