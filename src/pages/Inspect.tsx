@@ -57,8 +57,8 @@ export function Inspect() {
     setLive(null)
     if (!mintKey || isDemo) return
     let cancelled = false
-    fetchPumpStats(mintKey).then((stats) => {
-      if (cancelled || !stats) return
+
+    const apply = (stats: NonNullable<Awaited<ReturnType<typeof fetchPumpStats>>>) => {
       const needsImage =
         stats.imageUrl &&
         (!base?.imageUrl || !isUsableImageUrl(base.imageUrl))
@@ -69,6 +69,8 @@ export function Inspect() {
         marketCap: stats.marketCapUsd,
         liquidity: stats.liquidityUsd,
         bondingProgress: stats.bondingProgress,
+        ...(stats.volume24hUsd != null ? { volume24h: stats.volume24hUsd } : {}),
+        ...(stats.priceUsd != null ? { priceUsd: stats.priceUsd } : {}),
         ...(needsImage && stats.imageUrl ? { imageUrl: stats.imageUrl } : {}),
         ...(stats.complete
           ? {
@@ -78,9 +80,23 @@ export function Inspect() {
             }
           : {}),
       })
-    })
+    }
+
+    const pull = () => {
+      fetchPumpStats(mintKey).then((stats) => {
+        if (cancelled || !stats) return
+        apply(stats)
+      })
+    }
+
+    pull()
+    const id = window.setInterval(pull, 60_000)
+    const onFocus = () => pull()
+    window.addEventListener('focus', onFocus)
     return () => {
       cancelled = true
+      window.clearInterval(id)
+      window.removeEventListener('focus', onFocus)
     }
     // mintKey / isDemo only — base object is rebuilt each render from getCoin
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -128,15 +144,25 @@ export function Inspect() {
     !coin.quoteTicker ||
     coin.quoteTicker === 'SOL' ||
     coin.quoteTicker === 'USDC'
+  // Offline / not-yet-indexed: show em dash, never invent placeholder dollars.
   const fmtStat = (n: number) =>
-    isDemo && (!Number.isFinite(n) || n <= 0) ? '—' : formatUsd(n)
+    !Number.isFinite(n) || n <= 0 ? '—' : formatUsd(n)
 
   const metrics: { label: string; value: string; hint?: string }[] = [
     { label: 'Market cap (USD)', value: fmtStat(coin.marketCap) },
     { label: 'Liquidity (USD)', value: fmtStat(coin.liquidity) },
     { label: '24h volume', value: fmtStat(coin.volume24h) },
-    { label: 'Holders', value: coin.holders.toLocaleString() },
-    { label: 'Bonding progress', value: `${coin.bondingProgress}%` },
+    {
+      label: 'Holders',
+      value: isDemo || coin.holders > 1 ? coin.holders.toLocaleString() : '—',
+    },
+    {
+      label: 'Bonding progress',
+      value:
+        !live && !isDemo && coin.bondingProgress <= 0
+          ? '—'
+          : `${coin.bondingProgress}%`,
+    },
     {
       label: 'Creator fee',
       value: isProtocolFee ? '~1.25% (protocol)' : `${coin.creatorFee}%`,

@@ -33,6 +33,12 @@ export default defineConfig({
         target: 'https://frontend-api-v3.pump.fun',
         changeOrigin: true,
         rewrite: (p) => p.replace(/^\/api\/pump-coin/, '/coins'),
+        configure: (proxy) => {
+          proxy.on('proxyReq', (proxyReq) => {
+            proxyReq.setHeader('Origin', 'https://pump.fun')
+            proxyReq.setHeader('Referer', 'https://pump.fun/')
+          })
+        },
       },
     },
   },

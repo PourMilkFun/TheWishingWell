@@ -31,6 +31,17 @@ export const FEE_VAULT_TARGET_SOL = (() => {
   return Number.isFinite(n) && n > 0 ? n : 10
 })()
 
+/**
+ * Display baseline for the vault UI (SOL). Shown balance = max(0, on-chain − baseline).
+ * Snapshot of wallet 6urQ…Wish at reset (~1.082 SOL) so the UI starts at 0; new inbound SOL
+ * shows as the delta. Override with `VITE_FEE_VAULT_BASELINE_SOL`.
+ */
+export const FEE_VAULT_BASELINE_SOL = (() => {
+  const raw = (import.meta.env.VITE_FEE_VAULT_BASELINE_SOL as string | undefined)?.trim()
+  const n = raw ? Number(raw) : 1.082350573
+  return Number.isFinite(n) && n >= 0 ? n : 1.082350573
+})()
+
 /** Seed / demo mints that must not hit DexScreener or Pump APIs. */
 export function isPlaceholderMint(mint?: string | null): boolean {
   if (!mint) return true

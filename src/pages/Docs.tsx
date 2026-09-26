@@ -63,7 +63,7 @@ function Sidebar({
     <nav aria-label="Documentation">
       {nav.map((section) => (
         <div key={section.group} className="mb-6">
-          <p className="mb-2 px-2 text-[11px] font-bold uppercase tracking-[0.14em] text-ink-300">
+          <p className="mb-2 px-2 text-[11px] font-bold uppercase tracking-[0.14em] text-ink-500">
             {section.group}
           </p>
           <ul className="space-y-0.5">
@@ -77,7 +77,7 @@ function Sidebar({
                     className={`block rounded-lg px-2.5 py-1.5 text-[13px] font-semibold transition ${
                       isActive
                         ? 'bg-rose-100 text-rose-700'
-                        : 'text-ink-500 hover:bg-cream-100 hover:text-ink-800'
+                        : 'text-ink-700 hover:bg-cream-100 hover:text-ink-900'
                     }`}
                   >
                     {page.title}
@@ -103,7 +103,7 @@ function DocArticle({ page }: { page: DocPage }) {
       <h1 className="mt-2 font-display text-3xl font-semibold tracking-tight text-ink-900 sm:text-4xl">
         {page.title}
       </h1>
-      <p className="mt-3 text-base font-medium text-ink-500 sm:text-lg">{page.description}</p>
+      <p className="mt-3 text-base font-semibold text-ink-700 sm:text-lg">{page.description}</p>
 
       <div className="docs-body mt-8">
         {page.blocks.map((block, i) => (
@@ -117,7 +117,7 @@ function DocArticle({ page }: { page: DocPage }) {
             to={`/docs/${prev.slug}`}
             className="group rounded-2xl border border-rose-100 bg-milk/70 px-4 py-3 transition hover:border-rose-200 hover:bg-rose-50/60"
           >
-            <p className="text-[11px] font-bold uppercase tracking-wider text-ink-300">Previous</p>
+            <p className="text-[11px] font-bold uppercase tracking-wider text-ink-500">Previous</p>
             <p className="mt-1 text-sm font-bold text-ink-800 group-hover:text-rose-600">
               ← {prev.title}
             </p>
@@ -130,7 +130,7 @@ function DocArticle({ page }: { page: DocPage }) {
             to={`/docs/${next.slug}`}
             className="group rounded-2xl border border-rose-100 bg-milk/70 px-4 py-3 text-right transition hover:border-rose-200 hover:bg-rose-50/60"
           >
-            <p className="text-[11px] font-bold uppercase tracking-wider text-ink-300">Next</p>
+            <p className="text-[11px] font-bold uppercase tracking-wider text-ink-500">Next</p>
             <p className="mt-1 text-sm font-bold text-ink-800 group-hover:text-rose-600">
               {next.title} →
             </p>
@@ -166,7 +166,7 @@ export function Docs() {
           >
             {mobileOpen ? 'Close menu' : 'Docs menu'}
           </button>
-          <p className="truncate pl-3 text-sm font-semibold text-ink-500">{page.title}</p>
+          <p className="truncate pl-3 text-sm font-semibold text-ink-700">{page.title}</p>
         </div>
 
         <div className="grid lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10 xl:grid-cols-[260px_minmax(0,1fr)]">

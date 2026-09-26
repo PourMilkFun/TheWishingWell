@@ -95,13 +95,13 @@ export function CoinCard({ coin }: { coin: Coin }) {
               <div className="rounded-xl border border-white/50 bg-white/55 px-2.5 py-1.5 backdrop-blur-sm">
                 <p className="text-label !text-[8px]">MC</p>
                 <p className="text-sm font-extrabold tabular-nums text-ink-900">
-                  {formatUsd(coin.marketCap)}
+                  {coin.marketCap > 0 ? formatUsd(coin.marketCap) : '—'}
                 </p>
               </div>
               <div className="rounded-xl border border-white/40 bg-white/40 px-2.5 py-1 backdrop-blur-sm">
                 <p className="text-label !text-[8px]">LIQ</p>
                 <p className="text-xs font-extrabold tabular-nums text-ink-700">
-                  {formatUsd(coin.liquidity ?? 0)}
+                  {(coin.liquidity ?? 0) > 0 ? formatUsd(coin.liquidity ?? 0) : '—'}
                 </p>
               </div>
             </div>

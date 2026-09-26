@@ -205,21 +205,21 @@ export function Home() {
             </Link>
           </div>
         ) : (
-          <div className="grid gap-4 lg:grid-cols-5">
+          <div className="grid gap-3 lg:grid-cols-12 lg:items-start">
             {spotlight && (
-              <div className="lg:col-span-3">
-                <p className="mb-3 text-[10px] font-extrabold uppercase tracking-[0.16em] text-rose-400">
+              <div className="lg:col-span-9">
+                <p className="mb-2 text-[10px] font-extrabold uppercase tracking-[0.16em] text-rose-400">
                   Spotlight
                 </p>
                 <CoinCard coin={spotlight} />
               </div>
             )}
-            <div className="flex flex-col gap-2 lg:col-span-2">
-              <p className="mb-1 text-[10px] font-extrabold uppercase tracking-[0.16em] text-rose-400">
+            <div className="flex flex-col gap-1.5 lg:col-span-3">
+              <p className="mb-0.5 text-[9px] font-extrabold uppercase tracking-[0.14em] text-rose-400">
                 More on the board
               </p>
               {sideList.length === 0 ? (
-                <div className="well-panel flex flex-1 items-center justify-center p-6 text-center text-sm font-semibold text-ink-400">
+                <div className="well-panel flex flex-1 items-center justify-center px-3 py-4 text-center text-[11px] font-semibold leading-snug text-ink-400">
                   More launches will stack here.
                 </div>
               ) : (
@@ -227,27 +227,29 @@ export function Home() {
                   <Link
                     key={c.id}
                     to={`/coin/${c.id}`}
-                    className="well-panel flex items-center gap-3 p-3 transition hover:border-rose-300/60"
+                    className="well-panel flex items-center gap-2 px-2 py-1.5 transition hover:border-rose-300/60"
                   >
-                    <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl bg-cream-200">
+                    <div className="relative h-7 w-7 shrink-0 overflow-hidden rounded-lg bg-cream-200">
                       <TokenImage
                         url={c.imageUrl}
                         thumb={c.imageThumb}
                         emoji={c.emoji}
                         className="absolute inset-0"
                         imgClassName="h-full w-full object-cover"
-                        emojiClassName="flex h-full w-full items-center justify-center text-xl"
+                        emojiClassName="flex h-full w-full items-center justify-center text-sm"
                       />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="truncate font-display text-base font-semibold text-ink-900">
+                      <p className="truncate font-display text-[12px] font-semibold leading-tight text-ink-900">
                         {c.name}
                       </p>
-                      <p className="font-mono text-xs font-bold text-rose-400">${c.ticker}</p>
+                      <p className="font-mono text-[10px] font-bold leading-tight text-rose-400">
+                        ${c.ticker}
+                      </p>
                     </div>
-                    <div className="text-right">
-                      <p className="text-[9px] font-bold uppercase tracking-wider text-ink-400">MC</p>
-                      <p className="text-sm font-extrabold tabular-nums text-ink-800">
+                    <div className="shrink-0 text-right">
+                      <p className="text-[8px] font-bold uppercase tracking-wider text-ink-400">MC</p>
+                      <p className="text-[11px] font-extrabold tabular-nums leading-tight text-ink-800">
                         {c.isDemo || c.marketCap <= 0 ? '—' : formatUsd(c.marketCap)}
                       </p>
                     </div>

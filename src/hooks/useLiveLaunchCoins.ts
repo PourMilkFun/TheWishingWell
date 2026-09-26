@@ -81,6 +81,8 @@ export function useLiveLaunchCoins(): { coins: Coin[]; loading: boolean; count: 
             marketCap: s.marketCapUsd,
             liquidity: s.liquidityUsd,
             bondingProgress: s.bondingProgress,
+            ...(s.volume24hUsd != null ? { volume24h: s.volume24hUsd } : {}),
+            ...(s.priceUsd != null ? { priceUsd: s.priceUsd } : {}),
             // Patch http imageUrl from Pump, but never clear local imageThumb.
             ...(nextImage ? { imageUrl: nextImage } : {}),
             imageThumb: c.imageThumb,
