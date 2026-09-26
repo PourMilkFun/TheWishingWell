@@ -22,7 +22,7 @@ export const PUMP_COIN = (mint: string) => `https://pump.fun/coin/${mint}`
 /** Fee vault wallet — set `VITE_FEE_VAULT_WALLET` to override; defaults to Wish fee wallet. */
 export const FEE_VAULT_WALLET =
   (import.meta.env.VITE_FEE_VAULT_WALLET as string | undefined)?.trim() ||
-  'JAHGVbQp5wdwAAbAa8DknLS6njZTM6QsyUVbVQzxmiLK'
+  '6urQ4suhy2x8b9K3aqwSSMDKTYGF3j2jR1jXwJv7Wish'
 
 /** Soft fill target for the vault meter UI (SOL). Override with `VITE_FEE_VAULT_TARGET_SOL`. */
 export const FEE_VAULT_TARGET_SOL = (() => {

@@ -34,15 +34,15 @@ export function FeeVaultPanel() {
       <div className="relative mb-5 flex flex-wrap items-start justify-between gap-3">
         <div>
           <p className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-rose-400">
-            The Well · live SOL
+            Vault wallet · live SOL
           </p>
           <p className="mt-1 font-display text-2xl font-semibold tabular-nums text-ink-900 sm:text-3xl">
             {loading && sol === 0 ? '…' : formatSol(sol)}
           </p>
           <p className="mt-1 text-xs font-semibold text-ink-400">
             {wallet
-              ? <>Tracking {shortAddr(wallet)}</>
-              : 'Drop the vault wallet to start live tracking'}
+              ? <>Vault wallet {shortAddr(wallet)}</>
+              : 'Set vault wallet to start live tracking'}
           </p>
         </div>
         <span className="rounded-full border border-rose-200 bg-milk px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-rose-500 shadow-[0_2px_0_rgba(232,196,176,0.55)]">
