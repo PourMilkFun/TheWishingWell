@@ -123,7 +123,8 @@ export function formatUsd(n: number): string {
 }
 
 export function formatSol(n: number): string {
-  return `${n.toFixed(2)} SOL`
+  const v = Number.isFinite(n) ? Math.max(0, n) : 0
+  return `${v.toFixed(2)} SOL`
 }
 
 /** Pretty-print a tiny USD price like $0.000042. */

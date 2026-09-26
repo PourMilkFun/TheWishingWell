@@ -66,7 +66,9 @@ export function useFeeVaultSol(pollMs = 30_000): FeeVaultState {
     }
   }, [refresh, pollMs])
 
-  const sol = Math.max(0, onChainSol - FEE_VAULT_BASELINE_SOL)
+  const rawDelta = onChainSol - FEE_VAULT_BASELINE_SOL
+  // Never show negatives if balance dips below the display baseline.
+  const sol = Number.isFinite(rawDelta) ? Math.max(0, rawDelta) : 0
   const targetSol = Math.max(FEE_VAULT_TARGET_SOL, sol > 0 ? sol : FEE_VAULT_TARGET_SOL)
   const pct = Math.min(100, Math.round((sol / targetSol) * 100))
 
