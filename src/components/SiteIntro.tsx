@@ -29,7 +29,7 @@ type SiteIntroProps = {
   onComplete?: () => void
 }
 
-/** Fullscreen intro — plays once, fades out, then yields to the password gate / app. */
+/** Fullscreen intro — plays once, fades out, then yields to the app. */
 export function SiteIntro({ onComplete }: SiteIntroProps = {}) {
   const [visible, setVisible] = useState(shouldShowIntro)
   const [exiting, setExiting] = useState(false)
