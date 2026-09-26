@@ -3,12 +3,12 @@ import type { MyLaunch } from '../lib/myLaunches'
 /** Curated launches every visitor sees (merged with browser-local saves). */
 export const SITE_LAUNCHES: MyLaunch[] = [
   {
-    id: 'wish-seed-placeholder',
-    mint: 'Wish11111111111111111111111111111111111111',
-    name: 'Wish',
-    ticker: 'WISH',
-    description: 'Wish — liquidity in the well. Gold fees drop into The Well.',
-    imageUrl: '/tokens/wish-well-logo.jpg',
+    id: 'FxqmVuCGriC53qGsm8E8CeUAZiE5BRLc7kY8CYTXpump',
+    mint: 'FxqmVuCGriC53qGsm8E8CeUAZiE5BRLc7kY8CYTXpump',
+    name: 'Wishing Well',
+    ticker: 'Wish',
+    description: 'Wishing Well — liquidity in the well. Gold fees drop into The Well.',
+    imageUrl: '/tokens/wish-token.png',
     imageThumb: undefined,
     creatorFee: 1,
     quoteMint: 'So11111111111111111111111111111111111111112',
