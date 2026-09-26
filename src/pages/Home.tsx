@@ -50,8 +50,11 @@ export function Home() {
   const { coins: launches, count: launchCount } = useLiveLaunchCoins()
   const [sort, setSort] = useState<LaunchSort>('recent')
   const sorted = sortLaunches(launches, sort)
-  const spotlight = sorted[0]
-  const sideList = sorted.slice(1, 5)
+  /** Always spotlight Wishing Well when present. */
+  const WISH_SPOTLIGHT_MINT = 'FxqmVuCGriC53qGsm8E8CeUAZiE5BRLc7kY8CYTXpump'
+  const spotlight =
+    sorted.find((c) => c.mint === WISH_SPOTLIGHT_MINT) ?? sorted[0]
+  const sideList = sorted.filter((c) => c.mint !== spotlight?.mint).slice(0, 4)
   const liveCount = launches.filter((c) => c.badges.includes('VAULT LIVE')).length
 
   return (
