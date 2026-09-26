@@ -370,15 +370,16 @@
     overflow: hidden;
     border-radius: 1.55rem;
     background: #CDE5FF;
-    aspect-ratio: 1;
+    /* Match intro.mp4 (1168×784) so “Wishing Well” burn-in isn’t clipped */
+    aspect-ratio: 1168 / 784;
     box-shadow: inset 0 0 0 2px rgba(255, 254, 252, 0.85);
   }
   .well-hero-video {
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: center 45%;
+    object-fit: contain;
+    object-position: center center;
     opacity: 0;
     transition: opacity 0.45s ease;
   }

@@ -35,7 +35,7 @@ export function WellHero({ launches = 0 }: { launches?: number }) {
   }
 
   return (
-    <div className="relative mx-auto w-full max-w-[360px] animate-float" aria-hidden>
+    <div className="relative mx-auto w-full max-w-[420px] animate-float" aria-hidden>
       <div className="absolute -left-8 top-10 h-36 w-36 rounded-full bg-rose-200/35 blur-3xl blob animate-drift" />
       <div
         className="absolute -right-6 bottom-6 h-40 w-40 rounded-full bg-amber/25 blur-3xl blob animate-drift-slow"
