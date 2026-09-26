@@ -207,14 +207,14 @@ export function Home() {
         ) : (
           <div className="grid gap-3 lg:grid-cols-12 lg:items-start">
             {spotlight && (
-              <div className="mx-auto w-full max-w-sm lg:col-span-5 lg:mx-0 lg:max-w-none">
+              <div className="mx-auto w-full max-w-[14rem] sm:max-w-[16rem] lg:col-span-4 lg:mx-0 lg:max-w-[17rem]">
                 <p className="mb-2 text-[10px] font-extrabold uppercase tracking-[0.16em] text-rose-400">
                   Spotlight
                 </p>
                 <CoinCard coin={spotlight} />
               </div>
             )}
-            <div className="flex flex-col gap-2 lg:col-span-7">
+            <div className="flex flex-col gap-2 lg:col-span-8">
               <p className="mb-0.5 text-[9px] font-extrabold uppercase tracking-[0.14em] text-rose-400">
                 More on the board
               </p>
